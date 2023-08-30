@@ -52,11 +52,26 @@ OrderRepository orderRepository;
     }
 
     public Integer getOrdersLeftAfterGivenTimeByPartnerId(String time, String partnerId) {
-        return orderRepository.getOrdersLeftAfterGivenTimeByPartnerId(time,partnerId);
+        int intTime = Integer.parseInt(time.substring(0,2))*60 + Integer.parseInt(time.substring(3));
+
+        return orderRepository.getOrdersLeftAfterGivenTimeByPartnerId(intTime, partnerId);
     }
 
     public String getLastDeliveryTimeByPartnerId(String partnerId) {
-        return orderRepository.getLastDeliveryTimeByPartnerId(partnerId);
+        int lastOrderTime = orderRepository.getLastDeliveryTimeByPartnerId(partnerId);
+
+        int hours = lastOrderTime/60;
+        int minutes = lastOrderTime%60;
+        String HH = ""+hours;
+        String MM = ""+minutes;
+
+        if(HH.length()==1){
+            HH = '0'+HH;
+        }
+        if(MM.length()==1){
+            MM = '0'+MM;
+        }
+        return HH+':'+MM;
     }
 
     public void deletePartnerById(String partnerId) {
