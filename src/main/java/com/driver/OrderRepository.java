@@ -78,4 +78,26 @@ public class OrderRepository {
         int countofassignorders=oderToPatner.size();
         return countoforders-countofassignorders;
     }
+
+    public void deletePartnerById(String partnerId) {
+        if (!partnerOrderHashMap.containsKey(partnerId)) return;
+        deliveryPartnerHashMap.remove(partnerId);
+        List<Order>temp=partnerOrderHashMap.get(partnerId);
+        for (Order o:temp){
+            if (oderToPatner.containsKey(o.getId())) oderToPatner.remove(o);
+        }
+        partnerOrderHashMap.remove(partnerId);
+    }
+
+    public void deleteOrderById(String orderId) {
+        if (!orderHashMap.containsKey(orderId)) return;
+        orderHashMap.remove(orderId);
+        String partnerid=oderToPatner.get(orderId);
+        oderToPatner.remove(orderId);
+        List<Order>temp=partnerOrderHashMap.get(partnerid);
+        for (Order o:temp){
+            if (o.getId().equals(orderId)) temp.remove(o);
+        }
+        partnerOrderHashMap.put(partnerid,temp);
+    }
 }

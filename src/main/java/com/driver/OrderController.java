@@ -90,49 +90,50 @@ public class OrderController {
         return new ResponseEntity<>(orders, HttpStatus.CREATED);
     }
 
-//    @GetMapping("/get-count-of-unassigned-orders")
-//    public ResponseEntity<Integer> getCountOfUnassignedOrders(){
-//        Integer countOfOrders = orderService.getCountOfUnassignedOrders();
-//
-//        //Count of orders that have not been assigned to any DeliveryPartner
-//
-//        return new ResponseEntity<>(countOfOrders, HttpStatus.CREATED);
-//    }
-//
-//    @GetMapping("/get-count-of-orders-left-after-given-time/{partnerId}")
-//    public ResponseEntity<Integer> getOrdersLeftAfterGivenTimeByPartnerId(@PathVariable String time, @PathVariable String partnerId){
-//
-//        Integer countOfOrders = 0;
-//
-//        //countOfOrders that are left after a particular time of a DeliveryPartner
-//
-//        return new ResponseEntity<>(countOfOrders, HttpStatus.CREATED);
-//    }
-//
-//    @GetMapping("/get-last-delivery-time/{partnerId}")
-//    public ResponseEntity<String> getLastDeliveryTimeByPartnerId(@PathVariable String partnerId){
-//        String time = null;
-//
-//        //Return the time when that partnerId will deliver his last delivery order.
-//
-//        return new ResponseEntity<>(time, HttpStatus.CREATED);
-//    }
-//
-//    @DeleteMapping("/delete-partner-by-id/{partnerId}")
-//    public ResponseEntity<String> deletePartnerById(@PathVariable String partnerId){
-//
-//        //Delete the partnerId
-//        //And push all his assigned orders to unassigned orders.
-//
-//        return new ResponseEntity<>(partnerId + " removed successfully", HttpStatus.CREATED);
-//    }
-//
-//    @DeleteMapping("/delete-order-by-id/{orderId}")
-//    public ResponseEntity<String> deleteOrderById(@PathVariable String orderId){
-//
-//        //Delete an order and also
-//        // remove it from the assigned order of that partnerId
-//
-//        return new ResponseEntity<>(orderId + " removed successfully", HttpStatus.CREATED);
-//    }
+    @GetMapping("/get-count-of-unassigned-orders")
+    public ResponseEntity<Integer> getCountOfUnassignedOrders(){
+        Integer countOfOrders = orderService.getCountOfUnassignedOrders();
+
+        //Count of orders that have not been assigned to any DeliveryPartner
+
+        return new ResponseEntity<>(countOfOrders, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/get-count-of-orders-left-after-given-time/{partnerId}")
+    public ResponseEntity<Integer> getOrdersLeftAfterGivenTimeByPartnerId(@PathVariable String time, @PathVariable String partnerId){
+
+        Integer countOfOrders = 0;
+
+        //countOfOrders that are left after a particular time of a DeliveryPartner
+
+        return new ResponseEntity<>(countOfOrders, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/get-last-delivery-time/{partnerId}")
+    public ResponseEntity<String> getLastDeliveryTimeByPartnerId(@PathVariable String partnerId){
+        String time = null;
+
+        //Return the time when that partnerId will deliver his last delivery order.
+
+        return new ResponseEntity<>(time, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/delete-partner-by-id/{partnerId}")
+    public ResponseEntity<String> deletePartnerById(@PathVariable String partnerId){
+        orderService.deletePartnerById(partnerId);
+        //Delete the partnerId
+        //And push all his assigned orders to unassigned orders.
+
+        return new ResponseEntity<>(partnerId + " removed successfully", HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/delete-order-by-id/{orderId}")
+    public ResponseEntity<String> deleteOrderById(@PathVariable String orderId){
+
+        orderService.deleteOrderById(orderId);
+        //Delete an order and also
+        // remove it from the assigned order of that partnerId
+
+        return new ResponseEntity<>(orderId + " removed successfully", HttpStatus.CREATED);
+    }
 }
