@@ -50,10 +50,12 @@ public class OrderRepository {
 
 
     public Order getOrderById(String orderId) {
+        if (!orderHashMap.containsKey(orderId)) return null;
         return orderHashMap.get(orderId);
     }
 
     public DeliveryPartner getPartnerById(String partnerId) {
+        if (!deliveryPartnerHashMap.containsKey(partnerId)) return null;
         return deliveryPartnerHashMap.get(partnerId);
     }
 
@@ -64,9 +66,9 @@ public class OrderRepository {
     }
 
     public List<String> getOrdersByPartnerId(String partnerId) {
-
-        List<Order> list = partnerOrderHashMap.get(partnerId);
         List<String> orders = new ArrayList<>();
+        if (!partnerOrderHashMap.containsKey(partnerId)) return orders;
+        List<Order> list = partnerOrderHashMap.get(partnerId);
         for (Order o: list) {
             orders.add(o.getId());
         }
@@ -78,13 +80,11 @@ public class OrderRepository {
         for (String s: orderHashMap.keySet()) {
             orders.add(s);
         }
-
         return orders;
     }
 
     public Integer getCountOfUnassignedOrders() {
         Integer totalOrders = getAllOrders().size();
-
         Integer countOfAssignedOrders = 0;
         Integer ans = 0;
 
@@ -146,21 +146,12 @@ public class OrderRepository {
         else {
             hh = String.valueOf(h);
         }
-//        String hh = ""+h;
-//        String mm = ""+m;
-//
-//        if (hh.length() == 1) {
-//            hh = '0' + hh;
-//        }
-//
-//        if (mm.length() == 1) {
-//            mm = '0' + mm;
-//        }
 
         return hh + ":" + mm;
     }
 
     public void deletePartnerById(String partnerId) {
+
         DeliveryPartner dp = deliveryPartnerHashMap.get(partnerId);
         dp.setNumberOfOrders(0);
 
@@ -174,6 +165,7 @@ public class OrderRepository {
     }
 
     public void deleteOrderById(String orderId) {
+        if (!orderHashMap.containsKey(orderId)) return;
         String partnerId = orderToPartner.get(orderId);
         Order order = orderHashMap.get(orderId);
         partnerOrderHashMap.get(partnerId).remove(order);
