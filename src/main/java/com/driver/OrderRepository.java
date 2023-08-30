@@ -55,7 +55,7 @@ public class OrderRepository {
     }
 
     public DeliveryPartner getPartnerById(String partnerId) {
-        if (!deliveryPartnerHashMap.containsKey(partnerId)) return null;
+//        if (!deliveryPartnerHashMap.containsKey(partnerId)) return null;
         return deliveryPartnerHashMap.get(partnerId);
     }
 
